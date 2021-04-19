@@ -3,21 +3,14 @@ import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 
 
-const URL = `http://localhost/api/students`
+const URL = `http://localhost/api/amwayproduct`
 const fetcher = url => axios.get(url).then(res => res.data) 
 export default function Home() {
 
-  // const [students, setStudents] = useState({
-  //   list: [
-  //     { id: 1, name: 'Thanan', surname : 'Chairat' , major : 'CoE', GPA : 3.11 }
-  //   ]
-  // })
-
-  const [student, setStudent] = useState([])
+  const [amwayproduct, setAmwayproduct] = useState([])
   const [name,setName] = useState('')
-  const [surname,setSurname] = useState('')
-  const [major,setMajor] = useState('')
-  const [GPA,setGPA] = useState(0)
+  const [brand,setBrand] = useState('')
+  const [price,setPrice] = useState(0)
   
   const {data,error} = useSWR(URL,fetcher)
   if(!data)
@@ -25,59 +18,58 @@ export default function Home() {
       return <div>Loading ...</div>
   }
 
-  const addStudent = async (name,surname,major, GPA) =>{
-    let students = await axios.post(URL , {name,surname,major, GPA})
+  const addAmwayproduct = async (name,brand,price) =>{
+    let amwayproduct = await axios.post(URL , {name,brand,price})
     mutate(URL)
   }
 
-  const getStudents = async () => {
-    let student = await axios.get(URL)
+  const getAmwayproduct = async () => {
+    let amwayproduct = await axios.get(URL)
     mutate(URL)
     
   }
 
-  const printStudents = (students) =>{
-    if( students && students.length)
-    return (students.map((item, index) => 
+  const printamwayproduct = (amwayproduct) =>{
+    if( amwayproduct && amwayproduct.length)
+    return (amwayproduct.map((item, index) => 
           <li key = {index}>
             {index + 1 }:
             {(item) ? item.name : "-"}:
-            {(item) ? item.surname : "-"}:
-            {(item) ? item.major : "-"}:
-            {(item) ? item.GPA : 0}
-            <button onClick={() => getStudent(item.id)}>Get</button>
-            <button onClick={() => updateStudent(item.id)}>Update</button>
-            <button onClick={() => deleteStudent(item.id)}>Delete</button>
+            {(item) ? item.brand : "-"}:
+            {(item) ? item.price : 0}
+            <button onClick={() => getAmwayproduct(item.id)}>Get Product</button>
+            <button onClick={() => updateAmwayproduct(item.id)}>Update Product</button>
+            <button onClick={() => deleteAmwayproduct(item.id)}>Delete Product</button>
           </li>))
     else
-      return (<li>No Student</li>)
+      return (<li>No Amwayproduct</li>)
   }
 
-  const deleteStudent = async (id) => {
-    let students = await axios.delete(`${URL}/${id}`)
+  const deleteAmwayproduct = async (id) => {
+    let amwayproduct = await axios.delete(`${URL}/${id}`)
     mutate(URL)
   }
 
-  const updateStudent = async (id) => {
-    let students = await axios.put(`${URL}/${id}`,{name,surname,major,GPA})
+  const updateAmwayproduct = async (id) => {
+    let amwayproduct = await axios.put(`${URL}/${id}`,{name,brand,price})
     mutate(URL)
   }
 
-  const getStudent = async (id) => {
-    const student = await axios.get(`${URL}/${id}`)
-    setStudent({ name: student.data.name , surname: student.data.surname, major: student.data.major, GPA: student.data.GPA })
+  const getAmwayproduct = async (id) => {
+    const amwayproduct = await axios.get(`${URL}/${id}`)
+    setAmwayproduct({ name: amwayproduct.data.name , brand: amwayproduct.data.brand, price: amwayproduct.data.price })
   }
 
   return (
-    <div> Students
-      <ul>{printStudents(data.list)}</ul>
-      selected student: {student.name} {student.surname} {student.major} {student.GPA}
-      <h2>Add student</h2>
+    <div> amwayproduct
+      <ul>{printamwayproduct(data.list)}</ul>
+      selected amwayproduct: {amwayproduct.name} {amwayproduct.brand} {amwayproduct.price} 
+      <h2>Add amwayproduct</h2>
           Name : <input type="text" onChange={(e)=>setName(e.target.value)} /> <br/>
-          Surname : <input type="text" onChange={(e)=>setSurname(e.target.value)} /> <br/>
-          Major : <input type="text" onChange={(e)=>setMajor(e.target.value)} /> <br/>
-          GPA : <input type="number" onChange={(e)=>setGPA(e.target.value)} /> <br/>
-          <button onClick={ () => addStudent(name,surname,major,GPA)}>Add New Student</button>
+          Brand : <input type="text" onChange={(e)=>setBrand(e.target.value)} /> <br/>
+          Price : <input type="number" onChange={(e)=>setPrice(e.target.value)} /> <br/>
+
+          <button onClick={ () => addAmwayproduct(name,brand,price,GPA)}>Add New AmwayProduct</button>
 
     </div>
   )

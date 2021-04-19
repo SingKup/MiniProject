@@ -3,24 +3,22 @@ let app = express()
 let router = express.Router()
 let PORT = 80
 let bodyParser = require('body-parser');
-let students = 
+let amwayproduct = 
 { 
     list:
     [ 
         {
-            id: 6135512001,
-            name: "Thanawat",
-            surname: "Meejan",
-            major: "CoE",
-            GPA: 3.3,
+            id: 001,
+            name: "protein",
+            brand: "NUTRILITE",
+            price: "1100",
         },
 
         {
-            id: 4010341,
-            name: "John",
-            surname: "Lennon",
-            major: "SE",
-            GPA: 2.87
+            id: 002,
+            name: "collagen",
+            brand: "TRUVIVITY",
+            price: "1000"
         }
 
     ]
@@ -29,62 +27,62 @@ let students =
 app.use('/api', bodyParser.json() ,router);
 app.use('/api', bodyParser.urlencoded({ extended: false}) ,router);
 
-router.route('/students')
-    .get((req,res) => res.json(students.list))
+router.route('/amwayproduct')
+    .get((req,res) => res.json(amwayproduct.list))
     .post((req,res) => 
     {
-        let id = students.list.length ? students.list[students.list.length-1].id+1:1
+        let id = amwayproduct.list.length ? amwayproduct.list[amwayproduct.list.length-1].id+1:1
         id = req.body.id
         let name = req.body.name
-        let surname = req.body.surname
-        let major = req.body.major
-        let GPA = req.body.GPA
-        students = { list: [ ...students.list, {id, name, surname,major,GPA} ]}
-        res.json(students.list)
+        let brand = req.body.brand
+        let price = req.body.price
+
+        amwayproduct = { list: [ ...amwayproduct.list, {id, name, brand, price} ]}
+        res.json(amwayproduct.list)
     })
 
-router.route('/students/:student_id')
+router.route('/amwayproduct/:amway_id')
     .get( (req,res) => 
     {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id) )
+        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (show now)')
         }
         else
         {
-            res.json(students.list[id])
+            res.json(amwayproduct.list[id])
         }
 
     })
     .put( (req,res) =>
     {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id) )
+        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (update)')
         }
         else
         {
-            students.list[id].name = req.body.name
-            students.list[id].surname = req.body.surname
-            students.list[id].major = req.body.major
-            students.list[id].GPA = req.body.GPA
-            res.json(students.list)
+            amwayproduct.list[id].name = req.body.name
+            amwayproduct.list[id].brand = req.body.brand
+            amwayproduct.list[id].price = req.body.price
+
+            res.json(amwayproduct.list)
         }
         
     }) 
     .delete( (req,res) =>
     {
-        let id = students.list.findIndex((item) => (item.id === +req.params.student_id) )
+        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (delete)')
         }
         else
         {
-           students.list = students.list.filter( (item) => item.id !== +req.params.student_id)
-           res.json(students.list) 
+           amwayproduct.list = amwayproduct.list.filter( (item) => item.id !== +req.params.amway_id)
+           res.json(amwayproduct.list) 
         }
         
     })
