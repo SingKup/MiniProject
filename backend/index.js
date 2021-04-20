@@ -28,7 +28,7 @@ app.use('/api', bodyParser.json() ,router);
 app.use('/api', bodyParser.urlencoded({ extended: false}) ,router);
 
 router.route('/amwayproduct')
-    .get((req,res) => res.json(amwayproduct.list))
+    // .get((req,res) => res.json(amwayproduct.list))
     .post((req,res) => 
     {
         let id = amwayproduct.list.length ? amwayproduct.list[amwayproduct.list.length-1].id+1:1
@@ -42,19 +42,19 @@ router.route('/amwayproduct')
     })
 
 router.route('/amwayproduct/:amway_id')
-    .get( (req,res) => 
-    {
-        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
-        if(id === -1)
-        {
-            res.send('No id : (show now)')
-        }
-        else
-        {
-            res.json(amwayproduct.list[id])
-        }
+    // .get( (req,res) => 
+    // {
+    //     let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
+    //     if(id === -1)
+    //     {
+    //         res.send('No id : (show now)')
+    //     }
+    //     else
+    //     {
+    //         res.json(amwayproduct.list[id])
+    //     }
 
-    })
+    // })
     .put( (req,res) =>
     {
         let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
