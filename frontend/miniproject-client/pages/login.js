@@ -5,6 +5,7 @@ import Navbar from '../components/navbar'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
 import config from '../config/config'
+import logincss from '../styles/logincss.module.css'
 
 export default function Login({ token }) {
 
@@ -62,7 +63,7 @@ export default function Login({ token }) {
             <Head>
                 <title>Login</title>
             </Head>
-            <div className={styles.container}>
+            <div className={logincss.login}>
                 <Navbar />
                 <h1>Login</h1>
                 <div><b>Token:</b> {token.substring(0, 15)}...
