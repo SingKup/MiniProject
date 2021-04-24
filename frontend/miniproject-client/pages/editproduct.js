@@ -1,56 +1,34 @@
 import Head from 'next/head'
 import Layout from '../components/layout'
 import Navbar from '../components/navbar'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import proAuth from '../components/proAuth'
 import config from '../config/config'
 import logincss from '../styles/logincss.module.css'
-
+import useSWR, { mutate } from 'swr'
+const fetcher = url => axios.get(url).then(res => res.data)
 const URL = `${config.URL}/amwayproducts`
+
 const editproduct = ({ token }) => {
 
   const [name,setName] = useState('')
   const [brand,setBrand] = useState('')
   const [price,setPrice] = useState(0)
-  const [amwayproducts, setAmwayproducts] = useState({
-    list:
-    [
-        {
-            id: 1,
-            name: "protein",
-            brand: "NUTRILITE",
-            price: "1100",
-        },
-
-        {
-            id: 2,
-            name: "collagen",
-            brand: "TRUVIVITY",
-            price: "1000"
-        }
-    ]
-  })
+  const {data,error} = useSWR(URL,fetcher)
+  if(!data)
+  {
+      return <div>Loading ...</div>
+  }
  
-  useEffect(() => {
-    getAmwayproducts()
-  }, [])
-
   const addAmwayproduct = async (name, brand, price) =>{
     let amwayproducts = await axios.post(URL , {name, brand, price})
-    setAmwayproducts(amwayproducts.data)
-    alert(amwayproducts.data)
+    mutate(URL)
   }
 
-  const getAmwayproducts = async () => {
-    let amwayproducts = await axios.get(URL)
-    setAmwayproducts(amwayproducts.data)
-    
-  }
-
-  const printAmwayproducts = () =>{
-    if (amwayproducts.list && amwayproducts.list.length)
-				return (amwayproducts.list.map((amwayproduct, index) =>
+  const printAmwayproducts = (amwayproducts ) =>{
+    if (amwayproducts  && amwayproducts .length)
+				return (amwayproducts .map((amwayproduct, index) =>
           <li key = {index}>
             {index + 1 }:
             {(amwayproduct) ? amwayproduct.name : "-"}:
@@ -66,12 +44,12 @@ const editproduct = ({ token }) => {
 
   const deleteAmwayproduct = async (id) => {
     let amwayproducts = await axios.delete(`${URL}/${id}`)
-    setAmwayproducts(amwayproducts.data)
+    mutate(URL)
   }
 
   const updateAmwayproduct = async (id) => {
     let amwayproduct = await axios.put(`${URL}/${id}`,{name, brand, price})
-    setAmwayproducts(amwayproduct.data)
+    mutate(URL)
   }
 
   return (
@@ -81,9 +59,9 @@ const editproduct = ({ token }) => {
             </Head>
             <div className={logincss.wrapper}>
                 <Navbar />
-                {JSON.stringify(amwayproducts.amwayproducts)}
+                {/* {JSON.stringify(amwayproducts.amwayproducts)} */}
                 <ul >
-                    {printAmwayproducts()}
+                    {printAmwayproducts(data.list)}
                 </ul>
                 <h1>Add Amway Product</h1>
                 <div>

@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt')
 const db = require('./database.js')
 let users = db.users
 
-let amwayproduct = 
+let amwayproducts = 
 { 
     list:
     [ 
@@ -43,61 +43,61 @@ router.use(express.json())
 router.use(express.urlencoded({ extended: false }))
 
 router.route('/amwayproducts')
-    .get((req,res) => res.json(amwayproduct))
+    .get((req,res) => res.json(amwayproducts))
     .post((req,res) => 
     {
-        let id = amwayproduct.list.length ? amwayproduct.list[amwayproduct.list.length-1].id+1:1
-        id = req.body.id
+        let id = amwayproducts.list.length ? amwayproducts.list[amwayproducts.list.length-1].id+1:1
+        
         let name = req.body.name
         let brand = req.body.brand
         let price = req.body.price
 
-        amwayproduct = { list: [ ...amwayproduct.list, {id, name, brand, price} ]}
-        res.json(amwayproduct.list)
+        amwayproducts = { list: [ ...amwayproducts.list, {id, name, brand, price} ]}
+        res.json(amwayproducts)
     })
 
 router.route('/amwayproducts/:amway_id')
     .get( (req,res) => 
     {
-        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
+        let id = amwayproducts.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (show now)')
         }
         else
         {
-            res.json(amwayproduct.list[id])
+            res.json(amwayproducts.list[id])
         }
 
     })
     .put( (req,res) =>
     {
-        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
+        let id = amwayproducts.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (update)')
         }
         else
         {
-            amwayproduct.list[id].name = req.body.name
-            amwayproduct.list[id].brand = req.body.brand
-            amwayproduct.list[id].price = req.body.price
+            amwayproducts.list[id].name = req.body.name
+            amwayproducts.list[id].brand = req.body.brand
+            amwayproducts.list[id].price = req.body.price
 
-            res.json(amwayproduct.list)
+            res.json(amwayproducts)
         }
         
     }) 
     .delete( (req,res) =>
     {
-        let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )
+        let id = amwayproducts.list.findIndex((item) => (item.id === +req.params.amway_id) )
         if(id === -1)
         {
             res.send('No id : (delete)')
         }
         else
         {
-           amwayproduct.list = amwayproduct.list.filter( (item) => item.id !== +req.params.amway_id)
-           res.json(amwayproduct.list) 
+           amwayproducts.list = amwayproducts.list.filter( (item) => item.id !== +req.params.amway_id)
+           res.json(amwayproducts) 
         }
         
     })
