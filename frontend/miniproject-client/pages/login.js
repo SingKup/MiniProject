@@ -63,11 +63,11 @@ export default function Login({ token }) {
             <Head>
                 <title>Login</title>
             </Head>
-            <div className={logincss.login}>
+            <div className={logincss.wrapper}>
                 <Navbar />
                 <h1>Login</h1>
                 <div><b>Token:</b> {token.substring(0, 15)}...
-                <button onClick={copyText}> Copy token </button>
+                <button className = {logincss.button1} onClick={copyText}> Copy token </button>
                 </div>
                 <br/>
                 <div>
@@ -76,7 +76,7 @@ export default function Login({ token }) {
                 <br />
                     {loginForm()}
                 <div>
-                    <button onClick={login}>Login</button>
+                    <button className={logincss.button} onClick={login} >Login</button>
                 </div>
                 <div>
                 <input type="checkbox"

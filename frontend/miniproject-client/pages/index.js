@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Layout from '../components/layout' 
 import Navbar from '../components/navbar'
 import styles from '../styles/Home.module.css'
+import logincss from '../styles/logincss.module.css'
 
 export default function Home({ token }) {
  
@@ -10,7 +11,7 @@ export default function Home({ token }) {
     <Head>
         <title>First Page</title>
     </Head>
-    <div className={styles.container}>
+    <div className = {logincss.wrapper}>
         <Navbar />
         <h1>Home page</h1>
         No login required!

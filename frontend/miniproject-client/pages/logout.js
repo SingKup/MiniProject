@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
 import config from '../config/config'
+import logincss from '../styles/logincss.module.css'
 
 export default function Logout({ token }) {
 
@@ -25,7 +26,7 @@ export default function Logout({ token }) {
             <Head>
                 <title>User Amway Products</title>
             </Head>
-            <div className={styles.container}>
+            <div className={styles.container} className={logincss.wrapper}>
                 <Navbar />
                 <h1>Logout</h1>
                 <div>

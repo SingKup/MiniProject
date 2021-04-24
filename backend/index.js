@@ -15,14 +15,14 @@ let amwayproduct =
     list:
     [ 
         {
-            id: 001,
+            id: 1,
             name: "protein",
             brand: "NUTRILITE",
             price: "1100",
         },
 
         {
-            id: 002,
+            id: 2,
             name: "collagen",
             brand: "TRUVIVITY",
             price: "1000"
@@ -42,8 +42,8 @@ router.use(cors({ origin: 'http://localhost:3000', credentials: true }))
 router.use(express.json())
 router.use(express.urlencoded({ extended: false }))
 
-router.route('/amwayproduct')
-    .get((req,res) => res.json(amwayproduct.list))
+router.route('/amwayproducts')
+    .get((req,res) => res.json(amwayproduct))
     .post((req,res) => 
     {
         let id = amwayproduct.list.length ? amwayproduct.list[amwayproduct.list.length-1].id+1:1
@@ -56,7 +56,7 @@ router.route('/amwayproduct')
         res.json(amwayproduct.list)
     })
 
-router.route('/amwayproduct/:amway_id')
+router.route('/amwayproducts/:amway_id')
     .get( (req,res) => 
     {
         let id = amwayproduct.list.findIndex((item) => (item.id === +req.params.amway_id) )

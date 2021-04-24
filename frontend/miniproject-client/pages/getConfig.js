@@ -3,13 +3,14 @@ import Head from 'next/head'
 import config from '../config/config'
 import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
+import logincss from '../styles/logincss.module.css'
 
 const GetConfig = () => {
     return (<Layout>
         <Head>
             <title>Get Config</title>
         </Head>
-        <div className={styles.container}>
+        <div className={styles.container} className={logincss.wrapper}>
             <Navbar />
             <h2> Get Configuration from ../config/config.js </h2>
             <b>Config: </b> {JSON.stringify(config)}

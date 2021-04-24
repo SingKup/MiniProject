@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css'
 import Navbar from '../components/navbar'
 import axios from 'axios'
 import config from '../config/config'
+import logincss from '../styles/logincss.module.css'
 
 export default function Register({ token }) {
 
@@ -75,11 +76,11 @@ export default function Register({ token }) {
             <Head>
                 <title>Register</title>
             </Head>
-            <div className={styles.container}>
+            <div className={styles.container} className={logincss.wrapper}>
                 <Navbar />
                 <h1>Register</h1>
                 <div><b>Token:</b> {token.substring(0, 15)}...
-                <button
+                <button className={logincss.button1}
                         onClick={() => { navigator.clipboard.writeText(token) }}>
                         Copy Token
                 </button>
@@ -87,12 +88,12 @@ export default function Register({ token }) {
                 <br />
             Status:  {status}
                 <br /><br />
-                <div className={styles.content}>
+                <div className={styles.content} >
                     {registerForm()}
                 </div>
 
-                <div>
-                    <button onClick={register}>Register</button>
+                <div >
+                    <button className={logincss.button} onClick={register}>Register</button>
                 </div>
             </div>
         </Layout>

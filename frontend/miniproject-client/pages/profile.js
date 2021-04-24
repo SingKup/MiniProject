@@ -6,6 +6,7 @@ import styles from '../styles/Home.module.css'
 import axios from 'axios'
 import withAuth from '../components/withAuth'
 import config from '../config/config'
+import logincss from '../styles/logincss.module.css'
 
 const Profile1 = ({ token }) => {
 
@@ -35,7 +36,7 @@ const Profile1 = ({ token }) => {
             <Head>
                 <title>User Profile</title>
             </Head>
-            <div className={styles.container}>
+            <div className={styles.container} className={logincss.wrapper}>
                 <Navbar />
                 <h1>User Profile</h1>
                 <div>

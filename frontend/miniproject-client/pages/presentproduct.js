@@ -4,8 +4,9 @@ import Navbar from '../components/navbar'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 import axios from 'axios'
-import withAuth from '../components/withAuth'
+import proAuth from '../components/proAuth'
 import config from '../config/config'
+import logincss from '../styles/logincss.module.css'
 
 const URL = `${config.URL}/amwayproducts`
 const presentproduct = ({ token }) => {
@@ -14,14 +15,14 @@ const presentproduct = ({ token }) => {
         list:
         [
             {
-                id: 001,
+                id: 1,
                 name: "protein",
                 brand: "NUTRILITE",
                 price: "1100",
             },
     
             {
-                id: 002,
+                id: 2,
                 name: "collagen",
                 brand: "TRUVIVITY",
                 price: "1000"
@@ -56,7 +57,7 @@ const presentproduct = ({ token }) => {
             <Head>
                 <title>Amway Products</title>
             </Head>
-            <div>
+            <div className={logincss.wrapper}>
                 <Navbar/>
                 {JSON.stringify(amwayproducts.amwayproducts)}
                 <ul>
@@ -68,7 +69,7 @@ const presentproduct = ({ token }) => {
 	)
 }
 
-export default withAuth(presentproduct)
+export default proAuth(presentproduct)
 export function getServerSideProps({ req, res }) {
     return { props: { token: req.cookies.token || "" } };
 }
